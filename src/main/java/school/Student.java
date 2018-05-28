@@ -12,8 +12,9 @@ public final class Student {
     private final List<String> courses;
 
     public static StudentCriterion negate(StudentCriterion crit) {
-
+        return s -> !crit.test(s);
     }
+
     private static StudentCriterion enthusiasticStudentCriterion = s -> s.courses.size() > 1;
 
 //            (Student s) -> { return s.courses.size() > 1; };

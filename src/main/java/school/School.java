@@ -42,11 +42,15 @@ public class School {
                 Student.fromNameGradeCourses("Shiela", 65, "Maths", "Astro-physics", "Quantum Mechanics")
         );
 
+        System.out.println("All");
         showStudents(roster);
-//        showStudents(getSmartStudents(roster, 50));
-        showStudents(getStudentsByCriterion(roster, Student.getSmartCriterion(75)));
+        System.out.println("Enthusiastic");
         showStudents(getStudentsByCriterion(roster, Student.getEnthusiasticStudentCriterion()));
+//        showStudents(getSmartStudents(roster, 50));
+        System.out.println("Smarter than 75");
+        showStudents(getStudentsByCriterion(roster, Student.getSmartCriterion(75)));
 
+        System.out.println("Not... smarter than 75");
         StudentCriterion smart = Student.getSmartCriterion(75);
         StudentCriterion notSmart = Student.negate(smart);
 
