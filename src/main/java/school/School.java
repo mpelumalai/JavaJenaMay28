@@ -44,8 +44,14 @@ public class School {
 
         showStudents(roster);
 //        showStudents(getSmartStudents(roster, 50));
-        showStudents(getStudentsByCriterion(roster, Student.getSmartCriterion()));
+        showStudents(getStudentsByCriterion(roster, Student.getSmartCriterion(75)));
         showStudents(getStudentsByCriterion(roster, Student.getEnthusiasticStudentCriterion()));
+
+        StudentCriterion smart = Student.getSmartCriterion(75);
+        StudentCriterion notSmart = Student.negate(smart);
+
+        showStudents(getStudentsByCriterion(roster, notSmart));
+
     }
 
 }

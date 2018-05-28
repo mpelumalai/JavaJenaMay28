@@ -11,6 +11,9 @@ public final class Student {
     private final int grade;
     private final List<String> courses;
 
+    public static StudentCriterion negate(StudentCriterion crit) {
+
+    }
     private static StudentCriterion enthusiasticStudentCriterion = s -> s.courses.size() > 1;
 
 //            (Student s) -> { return s.courses.size() > 1; };
@@ -42,8 +45,9 @@ public final class Student {
         return enthusiasticStudentCriterion;
     }
 
-    public static StudentCriterion getSmartCriterion() {
-        return s -> s.getGrade() > 60;
+    public static StudentCriterion getSmartCriterion(/*final*/ int threshold) {
+//        threshold = threshold + 1;
+        return s -> s.getGrade() > threshold;
     }
 
 //    static class SmartStudentCriterion implements StudentCriterion {
