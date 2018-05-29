@@ -2,7 +2,12 @@ package school;
 
 import java.util.*;
 
-interface Criterion<E> {
+interface Blah {
+    void stupid();
+}
+
+@FunctionalInterface
+interface Criterion<E>/* extends Blah*/ {
     boolean test(E s);
     public static Criterion negate(Criterion crit) {
         return s -> !crit.test(s);

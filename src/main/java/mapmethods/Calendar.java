@@ -29,7 +29,9 @@ public class Calendar {
         combined.forEach((k,v) -> System.out.println(k + " : " + v));
 
         System.out.println("or again...");
-        Comparator<Map.Entry<LocalDate, String>> cmelds = Comparator.comparing(e -> e.getKey()).reversed();
+        Comparator<Map.Entry<LocalDate, String>> cmelds =
+                Comparator.<Map.Entry<LocalDate, String>, LocalDate>comparing(e -> e.getKey()).reversed();
+//                Comparator.comparing((Map.Entry<LocalDate, String>e) -> e.getKey()).reversed();
 //        cmelds = cmelds.reversed();
 
         List<Map.Entry<LocalDate, String>> entries = new ArrayList<>(combined.entrySet());
