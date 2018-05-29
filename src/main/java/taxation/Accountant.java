@@ -51,6 +51,6 @@ public class Accountant {
         collectJoesClients(joesClients);
 
         List<RichIndividual> lri = null;
-        collectJoesClients(lri);
+//        collectJoesClients(lri);
     }
 }
