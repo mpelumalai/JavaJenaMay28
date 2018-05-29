@@ -5,9 +5,9 @@ import java.util.List;
 
 public class School {
 
-    public static List<Student> getStudentsByCriterion(List<Student> ls, StudentCriterion crit) {
-        List<Student> out = new ArrayList<>();
-        for (Student s : ls) {
+    public static <E> List<E> getByCriterion(Iterable<E> ls, Criterion<? super E> crit) {
+        List<E> out = new ArrayList<>();
+        for (E s : ls) {
             if (crit.test(s)) {
                 out.add(s);
             }
@@ -26,8 +26,8 @@ public class School {
 //    }
 //
 
-    public static void showStudents(List<Student> ls) {
-        for (Student s : ls) {
+    public static <E> void show(List<E> ls) {
+        for (E s : ls) {
             System.out.println("> " + s);
         }
         System.out.println("-----------------------------");
@@ -43,18 +43,23 @@ public class School {
         );
 
         System.out.println("All");
-        showStudents(roster);
+        show(roster);
         System.out.println("Enthusiastic");
-        showStudents(getStudentsByCriterion(roster, Student.getEnthusiasticStudentCriterion()));
-//        showStudents(getSmartStudents(roster, 50));
+        show(getByCriterion(roster, Student.getEnthusiasticCriterion()));
+//        show(getSmartStudents(roster, 50));
         System.out.println("Smarter than 75");
-        showStudents(getStudentsByCriterion(roster, Student.getSmartCriterion(75)));
+        show(getByCriterion(roster, Student.getSmartCriterion(75)));
 
         System.out.println("Not... smarter than 75");
-        StudentCriterion smart = Student.getSmartCriterion(75);
-        StudentCriterion notSmart = Student.negate(smart);
+        Criterion smart = Student.getSmartCriterion(75);
+//        Criterion notSmart = Criterion.negate(smart);
+        Criterion notSmart = smart.negate();
 
-        showStudents(getStudentsByCriterion(roster, notSmart));
+        show(getByCriterion(roster, notSmart));
+
+        Criterion<CharSequence> ccs = s -> s.length() > 3;
+        List<String> names = List.of("Fred", "Jim", "Sheila");
+        show(getByCriterion(names, ccs));
 
     }
 

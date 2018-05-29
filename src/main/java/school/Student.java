@@ -2,8 +2,17 @@ package school;
 
 import java.util.*;
 
-interface StudentCriterion {
-    boolean test(Student s);
+interface Criterion<E> {
+    boolean test(E s);
+    public static Criterion negate(Criterion crit) {
+        return s -> !crit.test(s);
+    }
+    default Criterion<E> negate() {
+        return s -> !this.test(s);
+    }
+    default Criterion<E> and(Criterion<E> other) {
+        return s -> this.test(s) && other.test(s);
+    }
 }
 
 public final class Student {
@@ -11,47 +20,45 @@ public final class Student {
     private final int grade;
     private final List<String> courses;
 
-    public static StudentCriterion negate(StudentCriterion crit) {
-        return s -> !crit.test(s);
-    }
 
-    private static StudentCriterion enthusiasticStudentCriterion = s -> s.courses.size() > 1;
+
+    private static Criterion<Student> enthusiasticCriterion = s -> s.courses.size() > 1;
 
 //            (Student s) -> { return s.courses.size() > 1; };
 
-//    private static StudentCriterion enthusiasticStudentCriterion = /*new StudentCriterion() {*/
+//    private static Criterion enthusiasticCriterion = /*new Criterion() {*/
 //       /* @Override*/
 //        /*public boolean test*/(Student s) -> {
 //            return s.courses.size() > 1;
 //        }
 //    /*}*/;
 
-//    private static StudentCriterion enthusiasticStudentCriterion = new /*EnthusiasticStudentCriterion();
-//    private static class EnthusiasticStudentCriterion implements */ StudentCriterion() {
+//    private static Criterion enthusiasticCriterion = new /*EnthusiasticStudentCriterion();
+//    private static class EnthusiasticStudentCriterion implements */ Criterion() {
 //        @Override
 //        public boolean test(Student s) {
 //            return s.courses.size() > 1;
 //        }
 //    };
 
-    //    private static StudentCriterion enthusiasticStudentCriterion = new EnthusiasticStudentCriterion();
-//    private static class EnthusiasticStudentCriterion implements StudentCriterion {
+    //    private static Criterion enthusiasticCriterion = new EnthusiasticStudentCriterion();
+//    private static class EnthusiasticStudentCriterion implements Criterion {
 //        @Override
 //        public boolean test(Student s) {
 //            return s.courses.size() > 1;
 //        }
 //    }
 //
-    public static StudentCriterion getEnthusiasticStudentCriterion() {
-        return enthusiasticStudentCriterion;
+    public static Criterion<Student> getEnthusiasticCriterion() {
+        return enthusiasticCriterion;
     }
 
-    public static StudentCriterion getSmartCriterion(/*final*/ int threshold) {
+    public static Criterion<Student> getSmartCriterion(/*final*/ int threshold) {
 //        threshold = threshold + 1;
         return s -> s.getGrade() > threshold;
     }
 
-//    static class SmartStudentCriterion implements StudentCriterion {
+//    static class SmartStudentCriterion implements Criterion {
 //        @Override
 //        public boolean test(Student s) {
 //            return s.grade > 60;
